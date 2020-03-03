@@ -13,7 +13,8 @@ class SimilarUserList(Resource):
     def post(self):
         data=SimilarUserList.parser.parse_args()
         try: 
-            response=UserListModel.query(data['user_handle']).__next__()
-            return response.similar_users
+            request_data=data['user_handle']
+            response=UserListModel.query(request_data).__next__()
+            return {'request_data': request_data, 'data': {'similar_users': response.similar_users}}
         except StopIteration:
             return {'message': f'User with user_handle: {data["user_handle"]} not found'}, 404
