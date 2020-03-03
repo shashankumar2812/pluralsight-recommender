@@ -1,9 +1,9 @@
 from flask import Flask
 from flask_restful import Api
-from resources import SimilarUserList
+from server.resources import SimilarUserList
 
 app = Flask(__name__)
-app.config.from_object('server_config.DevelopmentConfig')
+app.config.from_object('server.config.DevelopmentConfig')
 api=Api(app)
 api.add_resource(SimilarUserList,'/similar-users/')
 
