@@ -8,11 +8,11 @@ There are many ways to find similar users. Broadly speaking following 2 ways:
 1.	Similarity based on interests
 2.	Similarity based on user interaction with the platform (Assessment Scores and Course view time)
 
-# 1.1. Similarity based on interests 
+## 1.1. Similarity based on interests 
 In this approach, my hypothesis is users who have similar interest tags are similar. After data preprocessing and cleaning, I represented documented in TF-IDF vector form (Bag Of Words model) and then found users who are closer in the vector space using cosine similarity. As the recommendation domain problems are generally dealing with sparse data, my choice of similarity metric is cosine similarity. 
 
-# 1.2. Similarity based on user interaction with the platform (Assessment Scores and Course view time)
-This is a Collaborative Filtering based approach and the hypothesis is users who have watched similar courses are similar. Here, I have build a user-item interaction matrix where each cell represents the interaction information(course view time/assessment score) between user and the course. The next step is to assume these users as a representation of n-dimensional feature vector where each one of the n-dimensions is a course. The final step is to find similarity(cosine similarity in this case) between these vectors.
+## 1.2. Similarity based on user interaction with the platform
+This is a Collaborative Filtering (Assessment Scores and Course view time) based approach and the hypothesis is users who have watched similar courses are similar. Here, I have build a user-item interaction matrix where each cell represents the interaction information(course view time/assessment score) between user and the course. The next step is to assume these users as a representation of n-dimensional feature vector where each one of the n-dimensions is a course. The final step is to find similarity(cosine similarity in this case) between these vectors.
 
 
 # 2. Prerequisites
@@ -22,7 +22,7 @@ This is a Collaborative Filtering based approach and the hypothesis is users who
 3. DynamoDB local
 4. Flask local
 
-## 3. Running Locally
+# 3. Running Locally
 1. Clone the repo locally
 2. Copy `example.env` to `.env` in the main folder structure
 3. Create virtual environment using:
@@ -54,12 +54,16 @@ The Recommendation Server will accept a `user_handle` using a `POST` request and
 
 Endpoint: `http://127.0.0.1:5000/similar-users/`
 One sample request format for user with `user_handle` `999`: 
-```{
+```
+{
 	"user_handle": 999
-}```
+}
+```
 
 Sample Response format:
-```{
+
+```
+{
     "request_data": 999,
     "data": {
         "model_handle": "collaborative_filtering_course_view",
@@ -76,7 +80,8 @@ Sample Response format:
             516
         ]
     }
-}```
+}
+```
 
 Here is an example:
 ![Alt text](/images/collaborative_filtering_api_response.png?raw=true "Postman")
@@ -86,5 +91,5 @@ Here is an example:
 
 With very minimal effort the same project can be migrated to a fully managed (AWS stack) real-world production level Recommendation Engine. Below is an overview.
 
-### 4.4. Real World Recommendater Architecture
+### 4.4. Real World Recommendater Architecture (AWS Stack)
 ![Alt text](/images/recommendation_microservice_architecture.png?raw=true "Real-World")
