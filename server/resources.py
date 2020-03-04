@@ -15,6 +15,6 @@ class SimilarUserList(Resource):
         try: 
             request_data=data['user_handle']
             response=UserListModel.query(request_data).__next__()
-            return {'request_data': request_data, 'data': {'similar_users': response.similar_users}}
+            return {'request_data': request_data, 'data': {'model_handle':response.model_handle, 'similar_users': response.similar_users}}
         except StopIteration:
             return {'message': f'User with user_handle: {data["user_handle"]} not found'}, 404

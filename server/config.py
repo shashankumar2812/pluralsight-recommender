@@ -17,8 +17,10 @@ class DevelopmentConfig(Config):
     DYNAMO_TABLES = [
     {
          'TableName': 'similar_users',
-         'KeySchema': [dict(AttributeName='user_handle', KeyType='HASH')],
-         'AttributeDefinitions': [dict(AttributeName='user_handle', AttributeType='S')],
+         'KeySchema': [dict(AttributeName='user_handle', KeyType='HASH'),
+                    dict(AttributeName='model_handle', KeyType='RANGE')],
+         'AttributeDefinitions': [dict(AttributeName='user_handle', AttributeType='N'),
+                    dict(AttributeName='model_handle', AttributeType='S')],
          'ProvisionedThroughput': dict(ReadCapacityUnits=5, WriteCapacityUnits=5)
     }
 
