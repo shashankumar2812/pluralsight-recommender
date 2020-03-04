@@ -24,7 +24,7 @@ class SimilarInterestUserModel:
         logger.debug('Finished running fit method of class {} '.format(self.__class__.__name__))
         return self
     
-    def predict_simiar_users(self, user_handle, num_similar_users=NUM_SIMILAR_USERS):
+    def predict_similar_users(self, user_handle, num_similar_users=NUM_SIMILAR_USERS):
         logger.debug(f'Predicting similar users for user_handle {user_handle}')
         user=self.user_index_dict[user_handle]
         cosine_similarities = linear_kernel(self.X[user], self.X).flatten()
