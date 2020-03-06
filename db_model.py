@@ -5,12 +5,13 @@ from pynamodb.attributes import (
     UnicodeAttribute,
     UTCDateTimeAttribute,
 )
+from DEFAULTS import DB_TARGET_HOST
 
 
 class UserListModel(Model):
     class Meta:
         table_name = "similar_users"
-        host = "http://localhost:8000"
+        host = DB_TARGET_HOST
 
     user_handle = NumberAttribute(hash_key=True)
     similar_users = ListAttribute()

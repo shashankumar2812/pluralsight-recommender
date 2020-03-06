@@ -1,5 +1,6 @@
 from datetime import datetime
 import logging
+from db_utils import create_table
 from DEFAULTS import GEN_LOG_LEVEL
 from generator.data.process_data import (
     UserInterestDataProcessor,
@@ -19,22 +20,28 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-    start_time = datetime.now()
-    logger.info("Starting Iris!")
-    run_similar_user_generator(
-        SimilarInterestUserModel,
-        sim_interest_model_params,
-        UserInterestDataProcessor,
-        model_handle="knn_user_interest",
-    )
-    run_similar_user_generator(
-        UserCourseViewSimilarityCFModel,
-        sim_course_view_params,
-        UserCourseViewTimeDataProcessor,
-        model_handle="collaborative_filtering_course_view",
-    )
-    logger.info("Iris Done Generating Similar Users!")
-    logger.info("Time of running the script: {}".format(datetime.now() - start_time))
+    try:
+        start_time = datetime.now()
+        logger.info("Starting Iris!")
+        create_table()
+        run_similar_user_generator(
+            SimilarInterestUserModel,
+            sim_interest_model_params,
+            UserInterestDataProcessor,
+            model_handle="knn_user_interest",
+        )
+        run_similar_user_generator(
+            UserCourseViewSimilarityCFModel,
+            sim_course_view_params,
+            UserCourseViewTimeDataProcessor,
+            model_handle="collaborative_filtering_course_view",
+        )
+        logger.info("Iris Done Generating Similar Users!")
+        logger.info(
+            "Time of running the script: {}".format(datetime.now() - start_time)
+        )
+    except:
+        log_exception()
 
 
 if __name__ == "__main__":

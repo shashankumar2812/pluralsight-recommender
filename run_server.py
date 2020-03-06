@@ -1,17 +1,13 @@
 from flask import Flask
 from flask_restful import Api
 from server.resources import SimilarUserList
+from db_utils import create_table
+from DEFAULTS import SERVER_PORT
 
 app = Flask(__name__)
-app.config.from_object('server.config.DevelopmentConfig')
-api=Api(app)
-api.add_resource(SimilarUserList,'/similar-users/')
+api = Api(app)
+api.add_resource(SimilarUserList, "/similar-users/")
 
-if __name__ == '__main__':
-    from db import db
-    db.init_app(app)
-    @app.before_first_request
-    def create_tables():
-        with app.app_context():
-            db.create_all()
-    app.run(port=5000)
+if __name__ == "__main__":
+    create_table()
+    app.run(port=SERVER_PORT, debug=True)
