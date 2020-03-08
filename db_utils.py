@@ -25,3 +25,10 @@ def check_if_table_exists():
 
 def delete_table():
     UserListModel.delete_table()
+
+
+def query_table(user_handle, model_handle="knn_user_interest"):
+    return UserListModel.query(
+        user_handle, UserListModel.model_handle == model_handle
+    ).__next__()
+
