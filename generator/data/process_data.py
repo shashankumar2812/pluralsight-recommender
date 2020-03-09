@@ -1,4 +1,4 @@
-import pandas as pd
+from amazon import read_file_from_s3
 from .data_utils import make_lower_case, remove_duplicates
 from paths import interests_file, user_course_views_file
 from helpers.utils import log_exception
@@ -7,7 +7,7 @@ from helpers.utils import log_exception
 class UserInterestDataProcessor:
     def load_data():
         try:
-            raw_data = pd.read_csv(interests_file)
+            raw_data = read_file_from_s3(interests_file)
             cleaned_data = raw_data.copy()
             cleaned_data["interest_tag"] = cleaned_data["interest_tag"].apply(
                 make_lower_case
@@ -33,7 +33,7 @@ class UserInterestDataProcessor:
 class UserCourseViewTimeDataProcessor:
     def load_data():
         try:
-            raw_data = pd.read_csv(user_course_views_file)
+            raw_data = read_file_from_s3(user_course_views_file)
             cleaned_data = raw_data.copy()
             cleaned_data = (
                 cleaned_data.groupby(["user_handle", "course_id"])
@@ -54,7 +54,7 @@ class UserCourseViewTimeDataProcessor:
 class UserCourseLevelDataProcessor:
     def load_data():
         try:
-            raw_data = pd.read_csv(user_course_views_file)
+            raw_data = read_file_from_s3(user_course_views_file)
             cleaned_data = raw_data.copy()
             user_idx_dict = {}
             course_idx_dict = {}
