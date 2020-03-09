@@ -5,14 +5,19 @@ from DEFAULTS import GEN_LOG_LEVEL
 from generator.data.process_data import (
     UserInterestDataProcessor,
     UserCourseViewTimeDataProcessor,
+    UserCourseLevelDataProcessor,
 )
 from generator.models.model_config import (
     sim_interest_model_params,
     sim_course_view_params,
+    sim_course_level_model_params,
 )
-from generator.models.predictor import run_similar_user_generator
+from db_writer import run_similar_user_generator
 from generator.models.similar_interest_model import SimilarInterestUserModel
 from generator.models.similar_view_time_model import UserCourseViewSimilarityCFModel
+from generator.models.similar_user_level_model import (
+    UserCourseLevelViewSimilarityCFModel,
+)
 from helpers.utils import log_exception
 from paths import generator_log_file
 
@@ -28,13 +33,19 @@ def main():
             SimilarInterestUserModel,
             sim_interest_model_params,
             UserInterestDataProcessor,
-            model_handle="knn_user_interest",
+            model_handle="tfidf_user_interest",
         )
         run_similar_user_generator(
             UserCourseViewSimilarityCFModel,
             sim_course_view_params,
             UserCourseViewTimeDataProcessor,
-            model_handle="collaborative_filtering_course_view",
+            model_handle="knn_collab_filtering_user_course_view",
+        )
+        run_similar_user_generator(
+            UserCourseLevelViewSimilarityCFModel,
+            sim_course_level_model_params,
+            UserCourseLevelDataProcessor,
+            model_handle="dnn_collab_filtering_user_course_level",
         )
         logger.info("Iris Done Generating Similar Users!")
         logger.info(
