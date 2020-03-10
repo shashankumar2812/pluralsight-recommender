@@ -24,7 +24,7 @@ The problem formulation goes as follows: Similar users watch courses with simila
 
 1. Python 3.7
 2. awscli installed and configured for access. Please use [this link](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) to configure it
-3. DynamoDB local. Please use [this link](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html) to configure local DynamoDB
+3. Run DynamoDB local. Please use [this link](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html) to configure and run local DynamoDB
 
 # 3. Running Locally
 1. Clone the repo locally
@@ -38,10 +38,11 @@ The problem formulation goes as follows: Similar users watch courses with simila
 5. Install requirements using following:
 `pip3 install -r requirements.txt`
 
-6. Run Recommendation Generator by running: 
+6. Make sure DynamoDB local is running
+7. Run Recommendation Generator by running: 
 `python3 run_generator.py`
 
-6. Run Recommendation Server by running: 
+8. Run Recommendation Server by running: 
 `python3 run_server.py`
 
 # 4. Recommender Technical Architecture
@@ -153,10 +154,33 @@ Sample Response format:
 Here is an example requesting similar users using Postman:
 ![Alt text](/images/collaborative_filtering_api_response.png?raw=true "Postman")
 
-### 4.3. Local Recommendater Architecture
+### 4.3. Local Recommender Architecture
 ![Alt text](/images/recommendation_microservice_architecture_local.png?raw=true "Local")
 
+## 5. Future work
+### 5.1. Real World Recommender Architecture (AWS Stack)
 With very minimal effort the same project can be migrated to a fully managed (AWS stack) real-world production level Recommendation Engine. Below is an overview.
-
-### 4.4. Real World Recommendater Architecture (AWS Stack)
 ![Alt text](/images/recommendation_microservice_architecture.png?raw=true "Real-World")
+
+### 5.2. Machine Learning
+1.	We can come up with a way of combining the output of all the above model and use it to find similar users. 
+2.	Create an AB testing setup to evaluate above models against each other in outside world.
+3.	It would be fun to experiment with Algorithms like Matrix Factorization, Factorization Machines and Neural Networks (may be Auto-encoders). One way would be to feed more data to a Neural Network having User Embedding layer which can be utilized for finding similar users.
+4.	I believe Sagemaker’s built-in algorithm Factorization Machine can be a strong contender for solving this problem. Because it would have costed me money, I chose not to try it.
+
+### 5.3. Backend
+1.	Develop a separate Microservice for Data Ingestion.
+2.	Configure Recommendation Generator algorithms on Sagemaker platform on a specified schedule. The approach is to use Sagemaker as an abstraction layer for managing model training and deployment infrastructure for ML pipeline.
+3.	Deploy Flask in Kubernetes cluster.
+4.	Implement AB testing layer in Flask or use Sagemaker’s AB Testing capability.
+5.	Add Security to the REST API and add healthcheck endpoint.
+6.	Integrate the application with Datadog or Sentry for monitoring.
+
+## 6. References
+1.	[Recommender Systems handbook by Francesco Ricci](https://www.springer.com/gp/book/9780387858203)
+2.	[Deep Learning with Python from Francoise Chollet](https://www.amazon.com/Deep-Learning-Python-Francois-Chollet/dp/1617294438)
+3. [Recommender Systems Specialization](https://www.coursera.org/specializations/recommender-systems)
+4.	[Deep Learning based Recommender System](https://arxiv.org/pdf/1707.07435.pdf)
+5.	[Factorization Machines](https://www.csie.ntu.edu.tw/~b97053/paper/Rendle2010FM.pdf)
+6.	[Recommender Systems and Deep Learning in Python](https://www.udemy.com/course/recommender-systems/)
+7.	[Building Recommender Systems with Machine Learning and AI](https://www.udemy.com/course/building-recommender-systems-with-machine-learning-and-ai/)
