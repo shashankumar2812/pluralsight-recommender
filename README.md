@@ -16,7 +16,7 @@ In this approach, my hypothesis is users who have similar interest tags are simi
 This is a Collaborative Filtering (Assessment Scores and Course view time) based approach and the hypothesis is users who have watched similar courses are similar. Following two models have been built using Collaborative Filtering approach:
 ### 1.2.1. K Nearest Neighbor based on Course View Time
 A user-item interaction matrix have been built where each cell represents the interaction information(course view time) between user and the course. The next step is to assume each user can be represented as n-dimensional feature vector where each one of the n-dimensions is a course. The final step is to find similarity(cosine similarity in this case) between these vectors.
-### 1.2.2. Deep Neaural Network based on Course Level View
+### 1.2.2. Deep Neural Network based on Course Level View
 The problem formulation goes as follows: Similar users watch courses with similar difficulty level. For instance, if a user X1 watched a course Y1 with difficulty level beginner, so she/he will be similar to User X2 who watched the same course Y1. So, if we can create such a Neural Network which can figure out a target level for a particular user based on User-Course viewing interaction with User Embedding layer, we can represent the users in Embedding space. The same Embedding representation is utilized to find similar users in the Embedding space using cosine similarity.
 
 
@@ -46,7 +46,7 @@ The problem formulation goes as follows: Similar users watch courses with simila
 
 # 4. Recommender Technical Architecture
 
-The Recommender Architecture is based on Microservices Architecture and consists of following 2 individual components.
+The Recommender Architecture is based on Microservices Architecture and consists of following 2 individual components. For simplicity, the codebase is kept same for this excercise but ideally we should split Recommendation Generator and Server in separate code bases with a (thin) shared library.
 
 ## 4.1. Recommendation Generator
 
